@@ -1,0 +1,14 @@
+CACHE MANIFEST
+# hash 95999d055b3b22c1ee3b6ed1ee2a5227b38515d7
+CACHE:
+play.html
+app.css
+app.js
+# BEGIN FAVICONS
+favicon.ico
+icon-270x270.png
+icon-192x192.png
+icon-128x128.png
+icon-32x32.png
+icon-16x16.png
+# END FAVICONS

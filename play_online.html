@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>CanYouFillIt</title>
+	<link rel="stylesheet" href="app.css">
+<!-- BEGIN FAVICONS -->
+	<link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48 256x256" href="favicon.ico">
+
+	<link rel="apple-touch-icon" sizes="192x192" href="icon-192x192.png">
+
+	<link rel="icon" type="image/png" sizes="192x192" href="icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="128x128" href="icon-128x128.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
+
+	<meta name="application-name" content="CanYouFillIt"/>
+	<meta name="msapplication-TileColor" content="#000000">
+	<meta name="msapplication-square70x70logo" content="icon-128x128.png" />
+	<meta name="msapplication-square150x150logo" content="icon-270x270.png" />
+
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+<!-- END FAVICONS -->
+</head>
+<body>
+<div id="d">
+	<canvas id="c"></canvas>
+	<div id="startScreen" class="modalScreen">
+		<div class="container">
+			<p class="title">CanYouFillIt</p>
+			<p>Developped by Cyrille&nbsp;Faucheux</p>
+			<p>Freely inspired by gimmefrictionbaby.com</p>
+			<p class="button"><span id="startScreenPlayButton">Play</span></p>
+			<p class="button"><span id="startScreenLicenseButton">License</span></p>
+		</div>
+	</div>
+	<div id="pauseScreen" class="modalScreen">
+		<div class="container">
+			<p class="title">Game paused</p>
+			<p class="button"><span id="pauseScreenContinueButton">Continue</span></p>
+		</div>
+	</div>
+	<div id="gameoverScreen" class="modalScreen">
+		<div class="container">
+			<p class="title">Game Over</p>
+			<p class="score"><span id="gameoverScreenScoreMessage">Your score</span><span id="gameoverScreenHighscoreMessage">New highscore</span>: <span id="gameoverScreenScore"></span></p>
+			<p class="button"><span id="gameoverScreenPlayAgainButton">Play again</span></p>
+		</div>
+	</div>
+	<div id="licenseScreen" class="modalScreen">
+		<div class="container">
+			<p class="title">License</p>
+			<div class="leftAligned">
+<p>Copyright (c) 2014 Cyrille FAUCHEUX.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+			</div>
+			<p class="button"><span id="licenseScreenBackButton">Back</span></p>
+		</div>
+	</div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

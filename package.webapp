@@ -1,0 +1,10 @@
+{
+	"name": "CanYouFillIt",
+	"version": "0.2",
+	"description": "A breakout-syle game mixed with snooker.",
+	"package_path": "http://sigill.github.io/canyoufillit/CanYouFillIt-FirefoxApp.zip",
+	"developer": {
+		"name": "Cyrille Faucheux",
+		"url": "http://about.me/cyrille.faucheux"
+	}
+}
