@@ -56,38 +56,8 @@ h1 {
 		<p>Click on the blue <em>Play now</em> button above and ask your browser to bookmark the page.</p>
 
 		<h3>Chrome, Chrome for Android</h3>
-		<p>Click on the blue <em>Play now</em> button above then, in the Chrome menu, click on the <em>Tools/Create applications shortcut</em> (Chrome) or <em>Add to homescreen</em> (Chrome for Android) entry.</p>
-
-		<p>or</p>
-
-		<p>Install DontYouFillIt as a Chrome OS App.</p>
-		<p><a id="chrome-install-hosted-btn" class="btn btn-default btn-lg btn-block" href="DontYouFillIt-ChromeHosted.crx">Install in Chrome (hosted)</a></p>
-		<p><a id="chrome-install-packaged-btn" class="btn btn-default btn-lg btn-block" href="DontYouFillIt-ChromePackaged.crx">Install in Chrome (packaged)</a></p>
+		<p>Click on the blue <em>Play now</em> button above then, in the Chrome menu, click on the <em>Add to homescreen</em> entry.</p>
 	</div>
 </div>
-<script>
-"use strict";
-function platform_only_message(platform) {
-	return function() {
-		alert('This functionality is only available on the ' + platform + ' platform.');
-	};
-}
-
-var chrome_platform_message_only = platform_only_message('Chrome OS');
-
-function allowChromeLink(evt) {
-	if(/\bCrOS\b/.test(navigator.userAgent)) {
-		return true;
-	} else {
-		chrome_platform_message_only();
-		evt.preventDefault();
-		return false;
-	}
-}
-
-document.getElementById('chrome-install-hosted-btn').addEventListener('click', allowChromeLink);
-document.getElementById('chrome-install-packaged-btn').addEventListener('click', allowChromeLink);
-
-</script>
 </body>
 </html>
