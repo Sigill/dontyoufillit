@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>DontYouFillIt</title>
+  <link rel="stylesheet" href="app.css">
+  <link rel="icon" type="image/png" sizes="16x16" href="icon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="icon-32x32.png">
+  <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48 256x256" href="favicon.ico">
+
+  <link rel="apple-touch-icon" sizes="120x120" href="touch-icon-iphone.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="touch-icon-iphone-retina.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="touch-icon-ipad.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="touch-icon-ipad-retina.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("service-worker.js").then(reg => {
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                newWorker.postMessage('skipWaiting');
+              }
+            });
+          });
+        });
+
+        let refreshing;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (refreshing) return;
+          refreshing = true;
+          window.location.reload();
+        });
+      });
+    }
+  </script>
+</head>
+<body>
+  <div class="fullscreen-container">
+    <div class="centered-container">
+      <dontyoufillit-hud></dontyoufillit-hud>
+      <div class="game">
+        <svg id="RewardPathLayer" viewBox="0 0 1 1.1667" preserveAspectRatio="none">
+          <defs>
+            <radialGradient id="myGradient" cx="0.5" cy="1.1" r="0.2" fr="0.05" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="red" />
+              <stop offset="50%" stop-color="yellow" />
+              <stop offset="100%" stop-color="green" />
+            </radialGradient>
+          </defs>
+          <path id="RewardPath" fill="url('#myGradient')" />
+        </svg>
+        <dontyoufillit-css-board></dontyoufillit-css-board>
+        <div id="VfxLayer" class="vfx-layer"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="screenContainer" class="fullscreen">
+    <div id="start-screen" class="fullscreen screen">
+      <div class="fullscreen vcentered">
+        <div class="vcentered-inner">
+          <h1>DontYouFillIt</h1>
+          <button id="play-button" class="mx-auto" data-autofocus>Play</button>
+          <div class="options-grid">
+            <label class="option" for="difficulty-slider">Difficulty</label>
+            <div class="difficulty-control">
+              <input type="range" id="difficulty-slider" min="3" max="5" step="1" value="3">
+              <span id="difficulty-label">normal</span>
+            </div>
+            <label class="option" for="checkbox-start-three-lives">Start with three lives</label>
+            <label class="switch"><input type="checkbox" id="checkbox-start-three-lives" checked /><span class="slider"></span></label>
+            <label class="option" for="checkbox-combo-hit-points">Combo hit points</label>
+            <label class="switch"><input type="checkbox" id="checkbox-combo-hit-points" checked /><span class="slider"></span></label>
+            <label class="option" for="checkbox-enable-bonuses">Enable bonuses</label>
+            <label class="switch"><input type="checkbox" id="checkbox-enable-bonuses" checked /><span class="slider"></span></label>
+          </div>
+          <button id="options-button" class="mx-auto">Options</button>
+          <button id="license-button" class="mx-auto">License</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="optionsScreen" class="fullscreen screen">
+      <div class="fullscreen vcentered">
+        <div class="vcentered-inner">
+          <h1>Options</h1>
+          <div class="options-grid">
+            <label class="option" for="showFramerateCheckbox">Show framerate</label>
+            <label class="switch"><input type="checkbox" id="showFramerateCheckbox"><span class="slider"></span></label>
+            <label class="option" for="soundCheckbox">Sound effects</label>
+            <label class="switch"><input type="checkbox" id="soundCheckbox" checked><span class="slider"></span></label>
+            <label class="option" for="vfxCheckbox">Visual effects</label>
+            <label class="switch"><input type="checkbox" id="vfxCheckbox" checked><span class="slider"></span></label>
+          </div>
+          <button id="optionsScreenBackButton" class="mx-auto" data-autofocus>Back</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="pause-screen" class="fullscreen screen">
+      <div class="fullscreen vcentered">
+        <div class="vcentered-inner">
+          <h1>Game paused</h1>
+          <div id="bonuses-container">
+            <h2 class="bonus-title">Bonuses</h2>
+            <button id="laser-bonus-button" class="secondary badge-button toggle-button mx-auto">
+              Laser
+              <span id="cost" class="badge on-inactive" style="background-color: #ff4d4d;"></span>
+              <span class="badge on-active" style="background-color: rgb(110, 255, 77);">✓</span>
+            </button>
+            <button id="oracle-bonus-button" class="secondary badge-button toggle-button mx-auto">
+              Oracle
+              <span id="cost" class="badge on-inactive" style="background-color: #ff4d4d;"></span>
+              <span class="badge on-active" style="background-color: rgb(110, 255, 77);">✓</span>
+            </button>
+
+            <hr style="width: 80%; margin: 2em auto; opacity: 0.5;">
+          </div>
+
+          <button id="continue-button" class="mx-auto" data-autofocus>Continue</button>
+          <button id="options-button" class="mx-auto">Options</button>
+          <button id="menu-button" class="mx-auto">Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="gameover-screen" class="fullscreen screen">
+      <div class="fullscreen vcentered">
+        <div class="vcentered-inner">
+          <h1>Game Over</h1>
+          <p class="score"><span id="score-message">Your score</span><span id="highscore-message">New highscore</span>: <span id="score"></span></p>
+          <button id="retry-button" class="mx-auto display-none-when-disabled" data-autofocus>Retry (<span id="remaining-lives"></span> left)</button>
+          <button id="play-again-button" class="mx-auto" data-autofocus>Play again</button>
+          <button id="menu-button" class="mx-auto">Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="licenseScreen" class="screen">
+      <h1>License</h1>
+      <p>DontYouFillIt is free software. Source code is available at <a href="https://github.com/Sigill/dontyoufillit-web" target="_blank">https://github.com/Sigill/dontyoufillit-web</a>. You can redistribute it and/or modify it under the terms of the MIT License.</p>
+<p>Copyright (c) 2026 Cyrille FAUCHEUX.</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+
+      <hr style="width: 80%; margin: 2em auto; opacity: 0.5;">
+
+      <h2>Third parties</h2>
+
+      <details>
+        <summary>
+          <h3 style="display: inline">stats.js</h3> (<a href="https://github.com/mrdoob/stats.js" target="_blank">website</a>) / MIT License
+        </summary>
+
+        <p>Copyright (c) 2009-2016 stats.js authors</p>
+        <p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+      </details>
+
+      <button id="licenseScreenBackButton" class="mx-auto">Back</button>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

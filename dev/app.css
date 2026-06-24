@@ -1,0 +1,564 @@
+/* src/ui/reset.css */
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -moz-user-select: none;
+  outline: 0;
+  outline: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  background: black;
+  color: white;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+}
+
+/* src/ui/hud.css */
+dontyoufillit-hud {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  justify-content: space-between;
+  overflow: hidden;
+  .left-col {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: min-content;
+    gap: 0 1ex;
+    align-items: baseline;
+    justify-content: start;
+    line-height: 80%;
+    padding-top: 0.15em;
+  }
+  .right-col {
+    display: grid;
+    grid-template-columns: auto auto;
+    .lives {
+      &[data-counter="3"]:before {
+        content: "\2665\2665\2665";
+      }
+      &[data-counter="2"]:before {
+        content: "\2665\2665";
+      }
+      &[data-counter="1"]:before {
+        content: "\2665";
+      }
+    }
+    .pause {
+      display: flex;
+      gap: 0.4em;
+      justify-content: center;
+      align-items: center;
+      padding: 0.2em;
+      .pause-bar {
+        background: white;
+        width: 0.6em;
+        height: 1.6em;
+      }
+    }
+  }
+}
+
+/* src/ui/css-board.css */
+dontyoufillit-css-board {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  #StaticBallLayer,
+  #LiveBallLayer {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+  }
+  #StaticBallLayer {
+    border: 1px solid black;
+  }
+  #LiveBallLayer {
+    border-width: 1px;
+    border-color: white;
+    border-style: solid solid dashed;
+  }
+  .Cannon {
+    position: absolute;
+    background-color: transparent;
+    width: 10%;
+    height: calc(100% * (3 / 35));
+    left: 50%;
+    bottom: 0;
+  }
+  .Cannon .In {
+    position: absolute;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+  }
+  .Cannon .Base {
+    position: absolute;
+    width: 100%;
+    height: calc(100% * (2 / 3));
+    bottom: 0;
+    background: white;
+  }
+  .Cannon .Dome {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: white;
+    top: calc(-100% * (1 / 6));
+  }
+  .Cannon .Turret {
+    position: absolute;
+    width: calc(100% * (2 / 3));
+    height: calc(100% * (5 / 9));
+    top: calc(100% * (1 / 18));
+    left: 50%;
+    background: white;
+    transform-origin: left 50%;
+    -webkit-transform-origin: left 50%;
+  }
+  .ball {
+    position: absolute;
+    background-color: transparent;
+  }
+  .ball .disk {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: white;
+  }
+  .ball:not([data-counter]) .num,
+  .ball:not([data-counter]) .bar {
+    display: none;
+  }
+  .ball[data-counter] .num {
+    position: absolute;
+    background-color: black;
+    height: 70%;
+  }
+  .ball[data-counter] .bar {
+    position: absolute;
+    background-color: white;
+    width: 35%;
+    height: 7.5%;
+  }
+  .ball[data-counter="1"] {
+    .num {
+      width: 20%;
+      left: 40%;
+      top: 15%;
+    }
+    .bar {
+      display: none;
+    }
+  }
+  .ball[data-counter="2"] {
+    .num {
+      width: 50%;
+      left: 25%;
+      top: 15%;
+    }
+    .bar-1 {
+      left: 20%;
+      top: 35%;
+    }
+    .bar-2 {
+      left: 45%;
+      top: 57.5%;
+    }
+  }
+  .ball[data-counter="3"] {
+    .num {
+      width: 50%;
+      left: 25%;
+      top: 15%;
+    }
+    .bar-1 {
+      left: 20%;
+      top: 35%;
+    }
+    .bar-2 {
+      left: 20%;
+      top: 57.5%;
+    }
+  }
+  .ball[data-counter="4"] {
+    .num {
+      width: 50%;
+      left: 25%;
+      top: 15%;
+    }
+    .bar-1 {
+      left: 45%;
+      top: 10%;
+      width: 10%;
+      height: 30%;
+    }
+    .bar-2 {
+      left: 20%;
+      top: 57.5%;
+      height: 30%;
+    }
+  }
+  .ball[data-counter="5"] {
+    .num {
+      width: 50%;
+      left: 25%;
+      top: 15%;
+    }
+    .bar-1 {
+      left: 45%;
+      top: 35%;
+    }
+    .bar-2 {
+      left: 20%;
+      top: 57.5%;
+    }
+  }
+  .game.laser-mode & {
+    #LiveBallLayer .ball .disk,
+    .Cannon .Turret {
+      background: red;
+    }
+  }
+}
+
+/* src/ui/reward-path.css */
+.game {
+  position: relative;
+  #RewardPathLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    display: none;
+  }
+  &.oracle-active #RewardPathLayer {
+    display: block;
+  }
+}
+
+/* src/sfx/vfx.css */
+.vfx-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+  z-index: 10;
+}
+.vfx-particle {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+/* src/app/app.css */
+.fullscreen-container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.centered-container {
+  aspect-ratio: 3 / 4;
+  width: min(100dvw, calc(100dvh * 3 / 4));
+  max-width: 100dvw;
+  max-height: 100dvh;
+  box-sizing: border-box;
+  font-size: calc(min(100dvw, calc(100dvh * 3 / 4)) / 12);
+  display: grid;
+  grid-template-rows: 1fr 7fr;
+  overflow: hidden;
+  dontyoufillit-hud,
+  .game {
+    overflow: hidden;
+  }
+}
+#screenContainer {
+  display: none;
+  background-color: black;
+}
+#screenWrapper {
+  position: relative;
+  top: 0;
+  max-width: 100%;
+}
+.fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.screen {
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 0 1ex;
+  display: none;
+  background-color: transparent;
+  color: white;
+  z-index: -1;
+  cursor: default;
+}
+.vcentered {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.vcentered-inner {
+  overflow-y: auto;
+}
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+button:focus,
+.info-link:focus {
+  outline: 2px solid #4d90fe;
+  outline-offset: 2px;
+  box-shadow: 0 0 8px rgba(77, 144, 254, 0.6);
+}
+input:focus + .slider {
+  outline: 2px solid #4d90fe;
+  outline-offset: 4px;
+  box-shadow: 0 0 8px rgba(77, 144, 254, 0.6);
+}
+#licenseScreen * {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+.screen h1 {
+  margin-top: 0.8em;
+  margin-bottom: 0.8em;
+  font-size: 300%;
+  font-weight: bold;
+  text-align: center;
+}
+.screen h2 {
+  font-size: 150%;
+  margin: 0.8em 0;
+  text-align: center;
+}
+.screen h3 {
+  font-size: 100%;
+  margin: 0.8em 0;
+}
+.option {
+  font-weight: bold;
+  text-align: center;
+}
+button {
+  all: unset;
+  box-sizing: border-box;
+  font-size: 250%;
+  margin: 1.2em 0;
+  text-align: center;
+  display: block;
+  position: relative;
+  background-color: white;
+  color: black;
+  border-radius: 0.25em;
+  padding: 0 0.1em;
+  font-weight: bold;
+  cursor: pointer;
+  line-height: 1.5;
+  width: fit-content;
+  min-width: 4em;
+  &:active {
+    opacity: 0.8;
+  }
+  &.secondary {
+    font-size: 150%;
+    margin-top: 0.8em;
+    margin-bottom: 0.8em;
+  }
+  &.badge-button {
+    .badge {
+      display: block;
+      position: absolute;
+      top: -0.3em;
+      right: -0.3em;
+      border-radius: 1em;
+      padding: 0.15em 0.4em;
+      font-size: 0.5em;
+      line-height: 1;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+      pointer-events: none;
+      border: 1px solid white;
+    }
+  }
+  &.toggle-button {
+    background-color: transparent;
+    border: 1px solid white;
+    color: white;
+    padding: 0.2em;
+    cursor: pointer;
+    border-radius: 0.25em;
+    .on-active {
+      display: none;
+    }
+    .on-inactive {
+      display: block;
+    }
+    &.active {
+      background-color: white;
+      color: black;
+      .on-active {
+        display: block;
+      }
+      .on-inactive {
+        display: none;
+      }
+    }
+    &:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      &:active {
+        pointer-events: none;
+      }
+    }
+  }
+}
+.screen .score {
+  font-size: 200%;
+  text-align: center;
+}
+.bonus-title {
+  font-size: 133%;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ccc;
+  letter-spacing: 0.1em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5ex;
+}
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+a:hover,
+a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+a:focus {
+  outline: 5px auto -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  margin: 1em auto;
+  width: fit-content;
+}
+.options-grid .option {
+  text-align: right;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  width: 60px;
+  height: 34px;
+}
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+  position: absolute;
+}
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+.display-none-when-disabled:disabled {
+  display: none;
+}
+.difficulty-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100px;
+  height: 10px;
+  background: #444;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #2196F3;
+  border-radius: 50%;
+  border: 2px solid white;
+  transition: transform 0.1s ease;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+}
+#difficulty-label,
+#options-difficulty-label {
+  min-width: 5em;
+  font-weight: bold;
+  color: #2196F3;
+  text-transform: capitalize;
+}
+/*# sourceMappingURL=app.css.map */
